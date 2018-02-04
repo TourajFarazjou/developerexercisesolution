@@ -1,0 +1,47 @@
+﻿@using ExerciseWebApplication.ViewModels;
+@*@using PagedList;
+@using PagedList.Mvc;*@
+
+@model HomeViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<hr />
+<div class="container">
+
+    @using (@Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-inline" }))
+    {
+
+        <div class="row">
+            <div class="form-group mb-2">
+                @*@Html.LabelFor(m => m.Country)*@
+                @Html.DropDownListFor(m => m.Country, new SelectList(Model.AvailableCountries), "--- Select country ---", new { @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Filter</button>
+        </div>
+
+    }
+
+
+    @*<table border="1">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => m.Airports.First().iata)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Airports.First().iso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Airports.First().name)
+                </th>
+                <th>Action</th>
+            </tr>
+
+
+
+        </table>*@
+
+</div>
