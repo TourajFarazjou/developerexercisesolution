@@ -1,0 +1,35 @@
+﻿@using ExerciseWebApplication.ViewModels;
+@model DistanceViewModel
+
+@{
+    ViewBag.Title = "Distance Calculator";
+}
+
+<div class="panel panel-info" style="margin-top: 20px;">
+    <div class="panel-heading">Calculate the distance between two airports</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.AirportA)
+                @Html.DropDownListFor(m => m.AirportA, new SelectList(Model.AvailableAirports), "-- Select --", new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.AirportB)
+                @Html.DropDownListFor(m => m.AirportB, new SelectList(Model.AvailableAirports), "-- Select --", new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="well well-sm text-center">
+    <span id="distance"></span>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#AirportA").bind("change", calculateDistance);
+            $("#AirportB").bind("change", calculateDistance);
+        });
+    </script>
+}

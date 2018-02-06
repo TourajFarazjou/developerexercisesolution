@@ -7,15 +7,12 @@ namespace ExerciseWebApplication.ViewModels
 {
     public class HomeViewModel
     {
-        [DisplayName("Filter on country")]
+        [DisplayName("Country")]
         public string Country { get; set; }
 
         public IEnumerable<string> AvailableCountries { get; set; }
 
         public IPagedList<Airport> Airports { get; set; }
-
-
-
-
     }
 }
+

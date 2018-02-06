@@ -1,6 +1,6 @@
-﻿using ExerciseWebApplication.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ExerciseWebApplication.Models;
 
 namespace ExerciseWebApplication.Services
 {
@@ -8,6 +8,6 @@ namespace ExerciseWebApplication.Services
     {
         Task<IEnumerable<Airport>> GetAirportsByContinent(string continent);
 
-        //Task<IEnumerable<Airport>> GetAirportsByCountry(string country);
+        Task<Airport> GetAirportByCode(string code);
     }
 }

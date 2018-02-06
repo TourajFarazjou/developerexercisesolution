@@ -11,15 +11,11 @@ namespace ExerciseWebApplication.App_Start
         {
             IUnityContainer container = new UnityContainer();
 
-            RegisterServices(container);
-
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-        }
-
-        private static void RegisterServices(IUnityContainer container)
-        {
             container.RegisterType<IDataCacheService, DataCacheService>();
             container.RegisterType<IDataService, DataService>();
+            container.RegisterType<ILocationService, LocationService>();
+ 
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
 }

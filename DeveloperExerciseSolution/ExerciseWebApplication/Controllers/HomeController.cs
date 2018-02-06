@@ -17,20 +17,22 @@ namespace ExerciseWebApplication.Controllers
             _DataService = dataService;
         }
 
-        // GET: Home
         [HttpGet]
         public async Task<ActionResult> Index(string country, int? page)
         {
             var airports = await _DataService.GetAirportsByContinent("EU");
+            var countries = airports.OrderBy(c => c.iso).Select(c => c.iso).Distinct();
+
+            if (!string.IsNullOrEmpty(country))
+                airports = airports.Where(c => c.iso.Equals(country, StringComparison.CurrentCultureIgnoreCase));
 
             var model = new HomeViewModel()
             {
-                Airports = airports.Where(c => c.iso.Equals(country, StringComparison.CurrentCultureIgnoreCase)).ToPagedList(page ?? 1, 10),
-                AvailableCountries = airports.OrderBy(c => c.iso).Select(c => c.iso).Distinct(),
+                Airports = airports.ToPagedList(page ?? 1, 10),
+                AvailableCountries = countries
             };
 
             return View(model);
         }
     }
-
 }

@@ -1,47 +1,98 @@
 ﻿@using ExerciseWebApplication.ViewModels;
-@*@using PagedList;
-@using PagedList.Mvc;*@
+@using PagedList;
+@using PagedList.Mvc;
 
 @model HomeViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Home page";
 }
 
-<hr />
-<div class="container">
+<div class="panel panel-info" >
+    <div class="panel-heading">
+        List of European airports
+    </div>
+    <div class="panel-body">
 
-    @using (@Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-inline" }))
-    {
-
-        <div class="row">
-            <div class="form-group mb-2">
-                @*@Html.LabelFor(m => m.Country)*@
-                @Html.DropDownListFor(m => m.Country, new SelectList(Model.AvailableCountries), "--- Select country ---", new { @class = "form-control" })
+        <div class="well-sm">
+            @using (@Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-horizontal" }))
+            {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Country, new { @class = "col-xs-3 col-sm-2 control-label" })
+                <div class="col-xs-3">
+                    @Html.DropDownListFor(m => m.Country, new SelectList(Model.AvailableCountries), "-- Select --", new { @class = "form-control" })
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Filter</button>
+            }
         </div>
 
-    }
+        <div class="container" style="margin-top: 5px;">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.Airports.First().iata)</th>
+                                    <th>
+                                        @Html.DisplayNameFor(m => m.Airports.First().name)
+                                    </th>
+                                    <th>@Html.DisplayNameFor(m => m.Airports.First().iso)</th>
+                                    <th>@Html.DisplayNameFor(m => m.Airports.First().type)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                            @if (Model.Airports.Count > 0)
+                            {
+                                foreach (var item in Model.Airports)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(m => item.iata)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => item.name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => item.iso)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => item.type)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4">  No records match search criteria </td>
+                                </tr>
+                            }
 
-    @*<table border="1">
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" >
+                                        @Html.PagedListPager(Model.Airports, 
+                                                        page => Url.Action("Index", new { page, country = Request.QueryString["country"] })
+                                                        , new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(m => m.Airports.First().iata)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Airports.First().iso)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(m => m.Airports.First().name)
-                </th>
-                <th>Action</th>
-            </tr>
-
-
-
-        </table>*@
-
+    </div>
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Country").bind("change", function () { this.form.submit(); });
+        });
+    </script>
+}
